@@ -11,15 +11,12 @@ load_dotenv(dotenv_path=f"{ROOT_DIR}/.env")
 
 
 class Settings(BaseSettings):
-    USER: str = "postgres.bksvnmerdasmlbrwppgh"
-    PASSWORD: str = os.getenv("PASSWORD", "47yjtJQHLzXMaDtQ")
-    HOST: str = os.getenv("HOST", "aws-0-us-west-1.pooler.supabase.com")
-    PORT: str = os.getenv("PORT", "6543")
-    DBNAME: str = os.getenv("DBNAME", "postgres")
-    DB_URL: str = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
-    MODEL_PATH: str = os.getenv("MODEL_PATH", "models/dt_model.pkl")
-    SCALER_PATH: str = os.getenv("SCALER_PATH", "models/scaler.pkl")
-    CAPTURE_INTERFACE: str = os.getenv("CAPTURE_INTERFACE", "enp58s0u1u1")
+    USERNAME: str = os.getenv("DB_USERNAME", "postgres")
+    PASSWORD: str = os.getenv("DB_PASSWORD", "password")
+    HOST: str = os.getenv("DB_HOST", "aws-0-us-west-1.pooler.supabase.com")
+    PORT: str = os.getenv("DB_PORT", "6543")
+    DBNAME: str = os.getenv("DB_NAME", "postgres")
+    DB_URL: str = f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
     WEBSOCKET_PORT: int = int(os.getenv("WEBSOCKET_PORT", "8765"))
 
     class Config:

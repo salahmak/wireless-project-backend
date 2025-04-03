@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.models import Base, NetworkFlow
-from app.config import settings
+from .models import Base, NetworkFlow
+from .config import settings
 from sqlalchemy.pool import NullPool
 import logging
 from sqlalchemy.sql import text
