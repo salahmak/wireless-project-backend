@@ -12,7 +12,7 @@ from .config import settings
 DEFAULT_INTERFACE = "wlan0"
 DEFAULT_OUTPUT_DIR = "zeek_logs"
 DEFAULT_LOG_PATH = "zeek_logs/conn.log"
-DEFAULT_MODEL_PATH = "models/final_dt_model.pkl"
+DEFAULT_MODEL_PATH = "models/final_bal_dt_(best)_model.pkl"
 
 
 def check_zeek_installation() -> bool:
