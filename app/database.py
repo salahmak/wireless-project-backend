@@ -28,6 +28,9 @@ def store_malicious_flow(flow_data):
     session = SessionLocal()
     try:
         # Create a new NetworkFlow instance
+        # drop source_ip from flow_data
+        flow_data.pop("source_ip", None)
+        
         flow = NetworkFlow(**flow_data)
         session.add(flow)
         session.commit()

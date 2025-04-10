@@ -21,7 +21,7 @@ A network monitoring system based on Zeek that detects and blocks malicious netw
 
 The system can be configured through environment variables in the `.env` file:
 
-- `MALICIOUS_THRESHOLD`: Number of malicious detections before blocking an IP (default: 3)
+- `MALICIOUS_THRESHOLD`: Number of malicious detections before blocking an IP (default: 5)
 - `DB_*`: Database connection settings
 
 ## Usage
@@ -34,8 +34,8 @@ python run.py -i <interface> -t <threshold>
 
 Arguments:
 - `-i, --interface`: Network interface to monitor (default: wlan0)
-- `-t, --threshold`: Number of malicious detections before blocking an IP (default: 3)
-- `-m, --model`: Path to the ML model file (default: models/final_dt_model.pkl)
+- `-t, --threshold`: Number of malicious detections before blocking an IP (default: 5)
+- `-m, --model`: Path to the ML model file (default: models/final_bal_dt_(best)_model.pkl)
 
 ## How It Works
 
