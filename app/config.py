@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     DBNAME: str = os.getenv("DB_NAME", "postgres")
     DB_URL: str = f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
     WEBSOCKET_PORT: int = int(os.getenv("WEBSOCKET_PORT", "8765"))
+    
+    # Malicious sender settings
+    MALICIOUS_THRESHOLD: int = int(os.getenv("MALICIOUS_THRESHOLD", "5"))
 
     class Config:
         env_file = str(ROOT_DIR / ".env")

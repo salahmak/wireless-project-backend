@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, Enum
+from sqlalchemy import Column, Integer, String, Float, DateTime, Enum, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timezone
 import enum
@@ -35,3 +35,18 @@ class NetworkFlow(Base):
     # Classification
     attack_type = Column(String, default="Benign")
     detection_timestamp = Column(DateTime, default=datetime.now(timezone.utc))
+
+
+class MaliciousSender(Base):
+    __tablename__ = "malicious_senders"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    ip_address = Column(String, unique=True, index=True)
+    detection_count = Column(Integer, default=1)
+    first_detection = Column(DateTime, default=datetime.now(timezone.utc))
+    last_detection = Column(DateTime, default=datetime.now(timezone.utc))
+    is_blocked = Column(Boolean, default=False)
+    blocked_timestamp = Column(DateTime, nullable=True)
+    
+    def __repr__(self):
+        return f"<MaliciousSender(ip={self.ip_address}, count={self.detection_count}, blocked={self.is_blocked})>"

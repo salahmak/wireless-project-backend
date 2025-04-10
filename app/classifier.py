@@ -6,21 +6,21 @@ from typing import Optional, Tuple, Dict
 COLUMNS = [
     "ts",
     "uid",
-    "id.orig_h",
-    "id.orig_p",
-    "id.resp_h",
-    "id.resp_p",
-    "proto",
-    "service",
-    "duration",
-    "orig_bytes",
-    "resp_bytes",
-    "conn_state",
-    "local_orig",
-    "local_resp",
-    "missed_bytes",
-    "history",
-    "orig_pkts",
+    "id.orig_h", # sender IP address
+    "id.orig_p", # sender port
+    "id.resp_h", # receiver IP address
+    "id.resp_p", # receiver port
+    "proto", # protocol
+    "service", # service
+    "duration", # connection duration
+    "orig_bytes", # bytes sent by origin
+    "resp_bytes", # bytes sent by destination
+    "conn_state", # connection state
+    "local_orig", # local origin
+    "local_resp", # local destination
+    "missed_bytes", # missed bytes
+    "history", # history
+    "orig_pkts", # packets sent by origin
     "orig_ip_bytes",
     "resp_pkts",
     "resp_ip_bytes",

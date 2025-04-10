@@ -65,6 +65,14 @@ def has_valid_field_count(line: str) -> bool:
     return len(fields) == len(COLUMNS)
 
 
+def extract_source_ip(line: str) -> str:
+    """Extract the source IP address from a log line"""
+    fields = line.strip().split("\t")
+    if len(fields) >= 3:
+        return fields[2]  # index 2 corresponds to id.orig_h (source IP)
+    return ""
+
+
 def monitor_conn_log(
     classifier: NetworkFlowClassifier, log_path: str = DEFAULT_LOG_PATH
 ) -> None:
@@ -88,8 +96,14 @@ def monitor_conn_log(
                         pass
 
                     attack_type, flow_data = classifier.predict(line)
+                    
+                    # Extract source IP address from the log line
+                    source_ip = extract_source_ip(line)
+                    if source_ip:
+                        flow_data["source_ip"] = source_ip
+                    
                     if attack_type != "Benign":
-                        print(f"{attack_type.upper()} ATTACK DETECTED!")
+                        print(f"{attack_type.upper()} ATTACK DETECTED from {source_ip}!")
                         try:
                             # Add raw log entry and attack type to flow data
                             flow_data["raw_log_entry"] = line.strip()
@@ -99,7 +113,7 @@ def monitor_conn_log(
                         except Exception as e:
                             print(f"❌ Error storing attack in database: {e}")
                     else:
-                        print("Normal flow. Record")
+                        print(f"Normal flow from {source_ip}")
                 file_position = f.tell()
         time.sleep(0.1)
 
@@ -119,6 +133,13 @@ def parse_arguments() -> argparse.Namespace:
         default=DEFAULT_MODEL_PATH,
         help=f"Path to the trained model file (default: {DEFAULT_MODEL_PATH})",
     )
+    parser.add_argument(
+        "-t",
+        "--threshold",
+        type=int,
+        default=settings.MALICIOUS_THRESHOLD,
+        help=f"Number of malicious detections before blocking an IP (default: {settings.MALICIOUS_THRESHOLD})",
+    )
     return parser.parse_args()
 
 
@@ -126,6 +147,10 @@ def main() -> None:
     """Main function to run the network monitoring system."""
     # Parse command line arguments
     args = parse_arguments()
+    
+    # Update malicious threshold if specified
+    if args.threshold:
+        settings.MALICIOUS_THRESHOLD = args.threshold
 
     # Initialize database
     try:
